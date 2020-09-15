@@ -6,7 +6,6 @@ import NotFound from "../NotFound";
 import Paper from '@material-ui/core/Paper';
 import Loader from "../Mods/Loader";
 import ModalPop from "../Mods/Modal";
-import { joinOperations }  from "../Mods/joiner";
 import { commonStyles } from "../Mods/styles";
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -43,21 +42,24 @@ const Search = ({ switchLoader, fetchSearch, fetched, loader }) => {
     const [error, switchError] = useState(false);
     const [modal, setModal] = useState(false);
     const searchMovies = (e) => {
-        if (e.target.innerText === "SEARCH" || e.keyCode == 13) {
-            /[a-z]{3,}/i.test(input) ?
-                joinOperations(switchLoader(), fetchSearch(input)) :
-                setModal(true);
-        }
+        (e.target.innerText === "SEARCH" || e.keyCode == 13) && (
+            /[a-z]{3,}/i.test(input) ? fetch_start() : setModal(true)
+        )
+    }
+    const fetch_start = () => {
+        switchLoader();
+        fetchSearch(input);
     }
     const inputChange = (e) => {
-        /^.{1,2}$/.test(e.target.value) ?
-            joinOperations(setHelper("Type at least 3 characters"), switchError(true)) :
-            joinOperations(setHelper(""), switchError(false));
+        /^.{1,2}$/.test(e.target.value) ? setHelper("Type at least 3 characters") : setHelper("");;
         setInput(e.target.value);
     }
     const closeModal = () => {
         setModal(false);
     }
+    useEffect(() => {
+        helper ? switchError(true) : switchError(false)
+    }, [helper]);
     return (
         <>
             <Paper className={mobile ? classes.formMobile : classes.formStandard}>
@@ -89,7 +91,7 @@ const Search = ({ switchLoader, fetchSearch, fetched, loader }) => {
                         {Array.isArray(fetched) && fetched.map(fetchitem => <SingleMovie key={fetchitem.imdbID} movie={fetchitem} />)}
                     </div>
                 </Paper> )}
-            {modal && <ModalPop error="typing error" info="Type at least 3 characters!" close={closeModal} />}
+            {modal && <ModalPop type="info" error="typing error" info="Type at least 3 characters!" close={closeModal}/>}
         </>
     )
 }

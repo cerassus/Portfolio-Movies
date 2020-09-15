@@ -8,7 +8,6 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import NotFound from "../NotFound";
 import Paper from '@material-ui/core/Paper';
 import ModalPop from "../Mods/Modal";
-import { joinOperations }  from "../Mods/joiner";
 import { commonStyles } from "../Mods/styles";
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -90,9 +89,7 @@ const Favorites = ({ history, match, location, movies }) => {
         )
     }
     const handleInputChange = (e) => {
-        /^.{1,2}$/.test(e.target.value) ?
-            joinOperations(setHelper("Type at least 3 characters"), switchError(true)) :
-            joinOperations(setHelper(""), switchError(false));
+        /^.{1,2}$/.test(e.target.value) ? setHelper("Type at least 3 characters") : setHelper("");
         setInput(e.target.value);
     }
     const closeModal = () => {
@@ -100,7 +97,9 @@ const Favorites = ({ history, match, location, movies }) => {
     }
 
     useEffect(() => history.push(url),[sort, type, searchStart]);
-    
+    useEffect(() => {
+        helper ? switchError(true) : switchError(false)
+    }, [helper]);
     return (
         <Fragment>
             <Paper className={mobile ? classes.formMobile : classes.formStandard}>
@@ -153,7 +152,7 @@ const Favorites = ({ history, match, location, movies }) => {
                         location.search.length > 8 ? <NotFound info="fetchError" /> : <NotFound info="arrayEmpty" />}
                 </div>
             </Paper>
-            {modal && <ModalPop error="typing error" info="Type at least 3 characters!" close={closeModal} />}
+            {modal && <ModalPop type="info" error="typing error" info="Type at least 3 characters!" close={closeModal} confirm=""/>}
         </Fragment>
     )
 }
