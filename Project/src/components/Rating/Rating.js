@@ -30,9 +30,15 @@ const Rating = ({ movies, currentMovie, removeMovie, pushMovie }) => {
     const [changeToRating, setChangeToRating] = useState(false);
 
     const handleWannaSee = (e) => {
-        e.target.checked ? (
+        if(e.target.checked) {
             movie.rating ? setModal(true) : setChangeToWannaSee(true)
-         ) : removeMovie(movie);
+         } else {
+             removeMovie(movie);
+             setMovie({
+                 ...movie,
+                 wannaSee: false,
+             })
+         } 
     }
     const handleRating = (e) => {
         setStars(Number(e.target.value));
@@ -43,7 +49,7 @@ const Rating = ({ movies, currentMovie, removeMovie, pushMovie }) => {
         setComponentDidMount(true)
     }, []);
     useEffect(() => {
-        componentDidMount && pushMovie(movie)
+        componentDidMount && (movie.rating || movie.wannaSee) && pushMovie(movie)
     }, [movie]);
     useEffect(() => {
         setChangeToRating(false);
