@@ -21,6 +21,7 @@ Main functionality:
 - user can sort rated and 'wanna see' movies alphabetically, by year or by rating
 - user can filter movies to show movies, series, episodes
 - user can change rating of the already rated movie
+- movie cannot be on both list at once
 
 You should use React with Redux. Any other libraries are most welcome.
 
