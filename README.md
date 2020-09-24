@@ -31,4 +31,4 @@ You should use React with Redux. Any other libraries are most welcome.
 
 # Website link on the server
 
-http://cerassus.usermd.net/movies/
+http://movies.cerassus.eu/
