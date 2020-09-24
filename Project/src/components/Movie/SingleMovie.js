@@ -5,15 +5,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles({
     flex: {
         display: "flex",
-        alignItems: "center",
     },
     container: {
         margin: "15px",
         flexDirection: "column",
+        alignItems: "center",
         justifyContent: "space-between",
         width: "260px",
         height: "550px",
@@ -24,9 +25,14 @@ const useStyles = makeStyles({
             transform: "scale(1.1)",
         }
     },
+    nohover: {
+        '&:hover': {
+            transform: "scale(1)!important",
+        }
+    },
     img: {
         maxWidth: "220px",
-        height: "330px",
+        height: "330px", 
         objectFit: "cover",
         boxShadow: "1px 1px 2px 2px rgba(0,0,0,0.75)",
     },    
@@ -39,26 +45,51 @@ const useStyles = makeStyles({
         justifyContent: "center",
         borderRadius: "0px",
         fontSize: "12px",
+        alignItems: "center",
+    },
+    closeButton: {
+        display: "flex",
+        alignItems: "center",
         padding: "0 5px",
-        textAlign: "center"
+        height: "100%",
+        cursor: "pointer",
+        fontSize: "20px",
+    },
+    closeIconHidden: {
+        width: "0px",
+    },
+    titleText: {
+        width: "100%", 
+        padding: "8px 8px",
+        lineHeight: "1.4",
+    },
+    closeIcon: {
+        width: "30px",
+        height: "auto",
     },
 });
 
 const SingleMovie = ({movie}) => {
     const classes = useStyles();
+    const mobile = useMediaQuery('(max-width:900px)');
+    const [x, showX] = React.useState(false);
+    const [deleteMovie, setDelete] = React.useState(false);
     return (
-        <Card className={`${classes.flex} ${classes.container}`}>
+        <Card className={mobile ? `${classes.flex} ${classes.container} ${classes.nohover}` : `${classes.flex} ${classes.container}`}>
             <Paper className={`${classes.flex} ${classes.title}`}>
-                <Typography variant="overline">{movie.Title}</Typography>
+                <Typography variant="overline" className={classes.titleText}>{movie.Title}</Typography>
+                <div className={classes.closeButton}>
+                    <img className={x ? classes.closeIcon : classes.closeIconHidden} src="http://movies.cerassus.eu/images/close-icon.png" onClick={() => setDelete(!deleteMovie)}/>
+                </div>
             </Paper>
                 <p>{movie.Year}</p>
                 <Link to={`/movie/${movie.imdbID}`}>
                     <img
                         className={classes.img}
-                        src={movie.Poster == "N/A" ? "../images/no-image.jpg" : movie.Poster}
+                        src={movie.Poster == "N/A" ? "http://movies.cerassus.eu/images/no-image.jpg" : movie.Poster}
                     />
                 </Link>
-                <Rating key={`${movie.imdbID} - rating`} currentMovie={movie} />
+                <Rating key={`${movie.imdbID} - rating`} currentMovie={movie} showX={(e) => showX(e)} deleteMovie={deleteMovie}/>
         </Card>
     )
 }

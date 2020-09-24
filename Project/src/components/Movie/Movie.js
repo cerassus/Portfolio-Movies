@@ -65,6 +65,10 @@ const Movie = ({ fetched, match }) => {
     const [title, setTitle] = useState("Similiar Movies:");
     const [movie, setMovie] = useState("");
     const [loader, setLoader] = useState(true);
+
+    const [x, showX] = React.useState(false);
+    const [deleteMovie, setDelete] = React.useState(false);
+    
     const titleToShow = (title) => {
         setTitle(title)
     }
@@ -94,7 +98,7 @@ const Movie = ({ fetched, match }) => {
                 <div className={classes.movieDetailImgContainer}>
                     <img 
                         className={classes.movieDetailImg} 
-                        src={movie.Poster === "N/A" ? "../images/no-image.jpg" : movie.Poster} 
+                        src={movie.Poster === "N/A" ? "http://movies.cerassus.eu/images/no-image.jpg" : movie.Poster} 
                     />
                 </div>
                 <div className={classes.movieDetailDescription}>
@@ -109,7 +113,7 @@ const Movie = ({ fetched, match }) => {
                     <p><span>Your Rating:</span></p>
                     <Rating 
                         key={`${movie.imdbID} - rating`} 
-                        currentMovie={movie} 
+                        currentMovie={movie} showX={(e) => showX(e)} deleteMovie={deleteMovie}
                     />
                 </div>
                 <div className={classes.movieDetailDescriptionStory}> 

@@ -5,10 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import IconButton from '@material-ui/core/IconButton';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import HelpPopUp from "../components/Mods/Help";
 
 const useStyles = makeStyles({
     tab: {
@@ -17,21 +19,31 @@ const useStyles = makeStyles({
     },
     menuVisible: {
         height: "48px",
-        transition: "height 0.3s ease",
     },
     menuVisibleMobile: {
         height: "144px",
-        transition: "height 0.3s ease",
     },
     menuHidden: {
         height: "0px",
-        transition: "height 0.3s ease",
     },
     root: {
         minHeight: "0px",
     },
     indicatorBig: {
         width: "8px",
+    },
+    toolbar: {
+        justifyContent:"space-between",
+    },
+    menuButton: {
+        display:"flex",
+        alignItems: "center",
+    },
+    helpButton: {
+        "&:hover": {
+            transform: "scale(1.6)",
+            cursor: "pointer",
+        }
     },
 });
 
@@ -55,6 +67,7 @@ const Navi = () => {
     const mobile = useMediaQuery('(max-width:700px)');
     const [value, setValue] = useState(0);
     const [menu, setMenu] = useState(true);
+    const [modal, setModal] = useState(false);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -64,16 +77,19 @@ const Navi = () => {
     return (
         <>
             <AppBar position="static" color="primary">
-                <Toolbar >
-                    <IconButton
-                        edge="start"
-                        style={{ marginRight: "10px" }}
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={handleMenuClick}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography type="h2">Favourite Movie Database</Typography>
+                <Toolbar className={classes.toolbar}>
+                    <div className={classes.menuButton}> 
+                        <IconButton
+                            edge="start"
+                            style={{ marginRight: "10px" }}
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={handleMenuClick}>
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography type="h2">Favourite Movie Database</Typography>
+                    </div>
+                    <HelpOutlineIcon className={classes.helpButton} onClick={() => setModal(true)}/>
                 </Toolbar>
             </AppBar>
             <Tabs
@@ -101,6 +117,7 @@ const Navi = () => {
                         className={classes.tab}
                     />)}
             </Tabs>
+            {modal && <HelpPopUp close={() => setModal(false)}/>}
         </>
     )
 }

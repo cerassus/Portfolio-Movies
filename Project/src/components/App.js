@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Search from "../containers/Search";
 import Movie from "../containers/Movie";
 import Navi from "../components/Navi";
@@ -12,14 +12,15 @@ import Test from "./Mods/Test";
 
 const App = () => (
     <Provider store={store}>
-      <Router basename="/movies">
+      <Router >
         <Route component={Navi} />
         <Switch>
           <Route exact path="/" component={Search} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/movie/:movieID" component={Movie} />
           <Route exact path="/favorites/:type/:sort/:favorite" component={Favorites} />
-          <Route component={() => <NotFound info="404" />} />
+          <Route path="/notfound" component={() => <NotFound info="404" />} />
+          <Redirect to="/notfound" />  
         </Switch>
         <Route component={Footer} />
       </Router>

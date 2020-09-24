@@ -19,13 +19,13 @@ const modals_info = {
     changeToRating: "It seems that this movie is on your Wanna See list. +Are You sure you want to delete it from this list and give it a Rating?!",    
 }
 
-const Rating = ({ movies, currentMovie, removeMovie, pushMovie }) => {
+const Rating = ({ movies, currentMovie, removeMovie, pushMovie, showX, deleteMovie }) => {
     const classes = useStyles();
     const index = movies.findIndex(item => item.imdbID === currentMovie.imdbID);
     const [movie, setMovie] = useState(index === -1 ? currentMovie : movies[index]);
     const [componentDidMount, setComponentDidMount] = useState(false);
     const [showModal, setModal] = useState(false);
-    const [stars, setStars] = useState(null);
+    const [stars, setStars] = useState(0);
     const [changeToWannaSee, setChangeToWannaSee] = useState(false);
     const [changeToRating, setChangeToRating] = useState(false);
 
@@ -42,14 +42,14 @@ const Rating = ({ movies, currentMovie, removeMovie, pushMovie }) => {
     }
     const handleRating = (e) => {
         setStars(Number(e.target.value));
-        movie.wannaSee ? setModal(true) : setChangeToRating(true);
     }
 
     useEffect(() => {
-        setComponentDidMount(true)
+        setComponentDidMount(true);
     }, []);
     useEffect(() => {
-        componentDidMount && (movie.rating || movie.wannaSee) && pushMovie(movie)
+        componentDidMount && (movie.rating || movie.wannaSee) && pushMovie(movie);
+        (!movie.wannaSee && !movie.rating) ? showX(false) : showX(true);
     }, [movie]);
     useEffect(() => {
         setChangeToRating(false);
@@ -60,16 +60,34 @@ const Rating = ({ movies, currentMovie, removeMovie, pushMovie }) => {
             ...movie,
             rating: false,
             wannaSee: true,
-        })
+        });
+        setChangeToWannaSee(false);
     }, [changeToWannaSee]);
     useEffect(() => {
         changeToRating && setMovie({
             ...movie,
             rating: stars,
             wannaSee: false,
-        })
+        });
+        setChangeToRating(false);
     }, [changeToRating]);
-
+    useEffect(() => {
+            if(deleteMovie) { 
+                removeMovie(movie);
+                setMovie({
+                    ...movie,
+                    wannaSee: false,
+                    rating: false,
+                })
+            };
+            setChangeToRating(false);
+            setChangeToWannaSee(false);
+    }, [deleteMovie]);
+    useEffect(() => {
+        componentDidMount && stars && (
+            movie.wannaSee ? setModal(true) : setChangeToRating(true)
+        )
+    }, [stars]);
     return (
         <div className={classes.ratingContainer}>
             <RatingMUI
