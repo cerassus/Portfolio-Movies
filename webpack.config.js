@@ -1,15 +1,13 @@
 const path = require("path");
-const entryPath = "Project";
 const entryFile = "index.js";
 
 module.exports = {
-  entry: `./${entryPath}/src/${entryFile}`,
   output: {
     filename: "out.js",
-    path: path.resolve(__dirname, `${entryPath}/build`)
+    path: path.resolve(__dirname, `public/build`)
   },
   devServer: {
-    contentBase: path.join(__dirname, `${entryPath}`),
+    contentBase: path.join(__dirname, `public`),
     publicPath: "/build/",
     compress: true,
     port: 3001,

@@ -1,16 +1,16 @@
 {
-  "name": "fsb-o-module-3-redux",
+  "name": "Movies",
   "version": "1.0.0",
-  "description": "<img alt=\"Logo\" src=\"https://coderslab.pl/svg/logo-coderslab.svg\" width=\"400\">",
+  "description": "Simple Movies Database",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot -d",
+    "start": "webpack-dev-server --open",
     "build": "webpack -p"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CodersLab-core/FE_ES6_REACT.git"
+    "url": "git+https://github.com/cerassus/Portfolio-Movies.git"
   },
   "keywords": [],
   "author": "",
