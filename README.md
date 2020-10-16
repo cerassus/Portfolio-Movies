@@ -25,9 +25,9 @@ Main functionality:
 
 You should use React with Redux. Any other libraries are most welcome.
 
-![public/images/warsztat1](Project/images/warsztat1.png)
-![public/images/warsztat1](Project/images/warsztat2.png)
-![public/images/warsztat1](Project/images/warsztat3.png)
+![public/images/warsztat1](public/images/warsztat1.png)
+![public/images/warsztat1](public/images/warsztat2.png)
+![public/images/warsztat1](public/images/warsztat3.png)
 
 # Website link on the server
 
