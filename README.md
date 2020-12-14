@@ -1,5 +1,7 @@
 # Movies
 
+![public/images/movies](public/images/Movies.png)
+
 This is an app that allows You to search for movies in database and rate them or save on 'wanna see' list.
 You can switch between the lists and search on top menu.
 You can always click on every movie to see its detailed information.
@@ -31,4 +33,11 @@ You should use React with Redux. Any other libraries are most welcome.
 
 # Website link on the server
 
-http://movies.cerassus.eu/
+https://movies.cerassus.eu/
+
+# Used Technologies
+
+![public/images/tech1](https://cerassus.eu/img/tech/mini/react.png)
+![public/images/tech2](https://cerassus.eu/img/tech/mini/redux.png)
+![public/images/tech3](https://cerassus.eu/img/tech/mini/router.png)
+![public/images/tech4](https://cerassus.eu/img/tech/mini/mui.png)
