@@ -31,6 +31,18 @@ You should use React with Redux. Any other libraries are most welcome.
 ![public/images/warsztat1](public/images/warsztat2.png)
 ![public/images/warsztat1](public/images/warsztat3.png)
 
+# Downloading code and running on your machine
+
+Make sure You installed the latest version of [Git](https://git-scm.com/downloads) and [NodeJS with npm](https://nodejs.org/en/download/).
+Open your terminal, enter the folder of your choice or create new one and type:
+```
+git clone https://github.com/cerassus/movies-react.git
+cd movies-react
+npm install
+npm start
+```
+Open your browser and enter the address "localhost:3001"
+
 # Website link on the server
 
 https://movies.cerassus.eu/
